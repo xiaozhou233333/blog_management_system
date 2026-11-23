@@ -38,7 +38,7 @@ import tools.jackson.databind.ObjectMapper;
  *
  * 白名单来自 application.yml 的 auth.whitelist（逗号分隔），默认只放登录。
  * token 用与 blog-common 的 JWTUtils 相同的密钥 + 算法（HS256）校验，
- * 签名密钥配在 jwt.secret，必须和 JWTUtils.secret 一致。
+ * 签名密钥配在 jwt.secret（值来自环境变量 JWT_SECRET），必须和 JWTUtils 用的一致。
  */
 @Slf4j
 @Component
@@ -48,7 +48,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     private final byte[] secretBytes;
     private final AuthWhiteNameProperties authWhiteName;
 
-    public AuthFilter(ObjectMapper objectMapper, @Value("dVnsmy+SIX6pNptQdeclDSJ26EMSPEIhvZYKBTTug4k=") String jwtSecret, AuthWhiteNameProperties authWhiteName) {
+    public AuthFilter(ObjectMapper objectMapper, @Value("${jwt.secret}") String jwtSecret, AuthWhiteNameProperties authWhiteName) {
         this.objectMapper = objectMapper;
         this.secretBytes = Decoders.BASE64.decode(jwtSecret);
         this.authWhiteName = authWhiteName;

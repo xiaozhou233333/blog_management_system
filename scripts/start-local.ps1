@@ -19,6 +19,19 @@ param(
 $ErrorActionPreference = "Stop"
 
 $root = Split-Path -Parent $PSScriptRoot
+
+# 本地敏感配置（数据库 / Nacos / RabbitMQ / 邮件 / JWT 密钥）放在 scripts\env.local.ps1，
+# 已被 .gitignore 忽略。application.yml 里都是 ${xxx} 占位符，没有这个文件服务起不来。
+# 模板：scripts\env.local.example.ps1
+$envFile = Join-Path $PSScriptRoot "env.local.ps1"
+if (Test-Path $envFile) {
+    . $envFile
+    Write-Host "已加载本地配置：scripts\env.local.ps1" -ForegroundColor DarkGray
+} else {
+    Write-Host "未找到 scripts\env.local.ps1（数据库/Nacos/邮件/JWT 密钥取不到值）。" -ForegroundColor Yellow
+    Write-Host "请先： Copy-Item scripts\env.local.example.ps1 scripts\env.local.ps1  然后填入真实值。" -ForegroundColor Yellow
+}
+
 $logDir = Join-Path $root "logs"
 New-Item -ItemType Directory -Force -Path $logDir | Out-Null
 

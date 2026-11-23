@@ -10,12 +10,13 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        username: nacos
-        password: "123456"
+        # 账号密码走环境变量，见 scripts/env.local.example.ps1
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD}
       config:
         server-addr: 127.0.0.1:8848
-        username: nacos
-        password: "123456"
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD}
       
     gateway:
       # Spring Cloud Gateway 5.0.x config prefix:
@@ -49,6 +50,8 @@ spring:
 # auth:
 #   whitelist: /user/login,/user/register
 
-# # 必须与 blog-common 里 JWTUtils.secret 完全一致，否则网关永远验不过用户登录发的 token
-# jwt:
-#   secret: dVnsmy+SIX6pNptQdeclDSJ26EMSPEIhvZYKBTTug4k=
+# JWT 签名密钥：AuthFilter 读取 jwt.secret。
+# 必须与 blog-common 里 JWTUtils 使用的环境变量 JWT_SECRET 完全一致，
+# 否则网关永远验不过用户登录发的 token。
+jwt:
+  secret: ${JWT_SECRET}

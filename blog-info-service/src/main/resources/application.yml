@@ -7,12 +7,13 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-        username: nacos
-        password: "123456"
+        # 账号密码走环境变量，见 scripts/env.local.example.ps1
+        username: ${NACOS_USERNAME:nacos}
+        password: ${NACOS_PASSWORD}
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/spring_cloud_blog?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: root
-    password: 123456
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis-plus:
   configuration:
