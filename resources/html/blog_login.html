@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 · 我的博客系统</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <img src="pic/logo2.jpg" alt="logo">
+        <a class="blog-title" href="blog_list.html">我的博客系统</a>
+        <div class="space"></div>
+        <a class="nav-span" href="blog_list.html">主页</a>
+        <a class="nav-span" href="blog_register.html">注册</a>
+    </nav>
+
+    <main class="auth-wrap">
+        <form class="auth-card" onsubmit="login(); return false;">
+            <div class="auth-head">
+                <img class="auth-logo" src="pic/logo2.jpg" alt="logo">
+                <h3>欢迎回来</h3>
+                <p>登录后即可发布和管理你的博客</p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="username">用户名</label>
+                <input class="form-input" type="text" id="username" name="userName"
+                       placeholder="请输入用户名" autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">密码</label>
+                <input class="form-input" type="password" id="password" name="password"
+                       placeholder="请输入密码" autocomplete="current-password">
+            </div>
+
+            <button class="btn btn-block mt-24" type="submit">登录</button>
+
+            <div class="auth-foot">
+                还没有账号？<a href="blog_register.html">立即注册</a>
+            </div>
+        </form>
+    </main>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        function login() {
+            var params = {
+                "userName": $("#username").val(),
+                "password": $("#password").val()
+            }
+            $.ajax({
+                type: "post",
+                url: "/user/login",
+                contentType: "application/json",
+                data: JSON.stringify(params),
+                success: function (result) {
+                    if (result != null && result.code == 200 && result.data != null && result.data.token) {
+                        localStorage.setItem("user_token", result.data.token);
+                        localStorage.setItem("loginUserId", result.data.userId);
+                        location.assign("blog_list.html");
+                    } else {
+                        alert(result && result.errMsg ? result.errMsg : "用户名或密码错误！");
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status == 401) {
+                        // 登录接口本身不该 401，出现说明网关白名单没放行 /user/login
+                        alert("登录接口被网关拦截了（401），请检查网关白名单是否包含 /user/login");
+                    } else {
+                        alert("登录请求失败，HTTP " + xhr.status);
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

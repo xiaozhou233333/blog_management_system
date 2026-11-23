@@ -1,0 +1,45 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        username: nacos
+        password: "123456"
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/spring_cloud_user?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      timeout: 60s
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: 5
+  rabbitmq: #配置RabbitMQ的基本信息
+    host: 127.0.0.1
+    port: 5672 #默认为5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
+  mail:
+    host: smtp.163.com
+    username: temp@163.com
+    password: temp
+    default-encoding: UTF-8
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

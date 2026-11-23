@@ -1,0 +1,72 @@
+/* 登录 / 注册页 —— 居中卡片式布局 */
+
+.auth-wrap {
+    min-height: calc(100vh - var(--nav-h));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 40px 36px 30px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.auth-head {
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.auth-head h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.auth-head p {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.auth-foot {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.auth-foot a {
+    color: var(--primary);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.auth-foot a:hover {
+    text-decoration: underline;
+}
+
+/* 品牌小图标 */
+.auth-logo {
+    display: block;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 14px;
+    border-radius: 14px;
+    object-fit: cover;
+    box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 28px 22px 24px;
+    }
+}

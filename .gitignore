@@ -1,0 +1,28 @@
+# ---- Build output ----
+target/
+build/
+out/
+*.class
+*.jar
+*.war
+
+# ---- Logs ----
+logs/
+*.log
+
+# ---- IDE ----
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.project
+.classpath
+.factorypath
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Maven wrapper jar is usually kept; keep it tracked ----

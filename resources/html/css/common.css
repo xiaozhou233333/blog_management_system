@@ -1,0 +1,390 @@
+/* ==========================================================
+   设计令牌（亮色 / 蓝色主色调）
+   ========================================================== */
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-active: #1e40af;
+    --primary-soft: #dbeafe;
+    --primary-ghost: #eff6ff;
+
+    --bg: #f5f8ff;
+    --surface: #ffffff;
+
+    --text: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+
+    --border: #e2e8f0;
+    --border-strong: #cbd5e1;
+    --danger: #dc2626;
+
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 16px;
+
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, .05);
+    --shadow-sm: 0 2px 8px rgba(37, 99, 235, .06);
+    --shadow: 0 6px 20px rgba(37, 99, 235, .10);
+    --shadow-lg: 0 16px 40px rgba(37, 99, 235, .14);
+
+    --nav-h: 64px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(1000px 520px at 100% -10%, rgba(37, 99, 235, .10), transparent 62%),
+        radial-gradient(820px 420px at -10% 108%, rgba(59, 130, 246, .08), transparent 60%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: var(--primary);
+}
+
+/* ==========================================================
+   顶部导航
+   ========================================================== */
+.nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--nav-h);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 32px;
+    background: rgba(255, 255, 255, .88);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav > img {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: var(--shadow-xs);
+}
+
+.nav > .blog-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    color: var(--text);
+    margin-left: 6px;
+    text-decoration: none;
+}
+
+.nav > .space {
+    flex: 1;
+}
+
+.nav > .nav-span {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color .18s, color .18s;
+}
+
+.nav > .nav-span:hover {
+    background: var(--primary-ghost);
+    color: var(--primary);
+}
+
+.nav > .nav-span.active {
+    background: var(--primary-soft);
+    color: var(--primary-hover);
+}
+
+.nav > .nav-span.primary {
+    background: var(--primary);
+    color: #fff;
+}
+
+.nav > .nav-span.primary:hover {
+    background: var(--primary-hover);
+}
+
+/* ==========================================================
+   页面主容器（左侧栏 + 右侧内容）
+   ========================================================== */
+.container {
+    width: 1100px;
+    max-width: calc(100% - 48px);
+    margin: 28px auto 48px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.container > .left {
+    flex: 0 0 260px;
+    width: 260px;
+    position: sticky;
+    top: calc(var(--nav-h) + 20px);
+}
+
+.container > .right {
+    flex: 1;
+    min-width: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    padding: 32px;
+}
+
+/* ==========================================================
+   侧边个人卡片
+   ========================================================== */
+.card {
+    padding: 28px 20px 20px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.card > img {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary-soft);
+    box-shadow: var(--shadow-xs);
+}
+
+.card > h3 {
+    margin: 14px 0 6px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    word-break: break-all;
+}
+
+.card > a {
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.card > a:hover {
+    text-decoration: underline;
+}
+
+.card > .row {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.card > .row > span {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================
+   表单控件
+   ========================================================== */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color .18s, box-shadow .18s;
+}
+
+.form-input::placeholder {
+    color: #94a3b8;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .14);
+}
+
+/* ==========================================================
+   按钮
+   ========================================================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    padding: 0 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--primary);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color .18s, box-shadow .18s, transform .06s;
+}
+
+.btn:hover {
+    background: var(--primary-hover);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+.btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.btn-block {
+    display: flex;
+    width: 100%;
+}
+
+.btn-ghost {
+    color: var(--primary);
+    background: var(--primary-ghost);
+}
+
+.btn-ghost:hover {
+    background: var(--primary-soft);
+    box-shadow: none;
+}
+
+.btn-outline {
+    color: var(--primary);
+    background: var(--surface);
+    border: 1px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary-ghost);
+    box-shadow: none;
+}
+
+.btn-danger-outline {
+    color: var(--danger);
+    background: var(--surface);
+    border: 1px solid #fecaca;
+}
+
+.btn-danger-outline:hover {
+    background: #fef2f2;
+    box-shadow: none;
+}
+
+/* ==========================================================
+   工具类
+   ========================================================== */
+.text-center { text-align: center; }
+.mt-8  { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mt-32 { margin-top: 32px; }
+
+.muted {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.badge {
+    display: inline-block;
+    padding: 2px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--primary-hover);
+    background: var(--primary-ghost);
+    border-radius: 999px;
+}
+
+/* 空状态 */
+.empty {
+    padding: 72px 20px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+/* 页面标题区 */
+.page-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 20px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+}
+
+.page-head h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.page-head .meta {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* 响应式 */
+@media (max-width: 900px) {
+    .nav { padding: 0 16px; }
+    .container {
+        flex-direction: column;
+        max-width: calc(100% - 32px);
+        margin: 20px auto 32px;
+    }
+    .container > .left {
+        position: static;
+        width: 100%;
+        flex: none;
+    }
+    .container > .right { padding: 22px; }
+}

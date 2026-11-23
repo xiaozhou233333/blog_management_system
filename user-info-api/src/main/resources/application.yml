@@ -1,0 +1,3 @@
+# 本模块是"契约 jar"，不负责启动，也不该带配置文件。
+# 之前这里留着 server.port / spring.application.name / datasource，
+# 打包进 jar 后会与服务自己的 application.yml 抢配置，已清空。

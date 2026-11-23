@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>编辑博客 · 我的博客系统</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/edit.css">
+    <link rel="stylesheet" href="blog-editormd/css/editormd.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <img src="pic/logo2.jpg" alt="logo">
+        <a class="blog-title" href="blog_list.html">我的博客系统</a>
+        <div class="space"></div>
+        <a class="nav-span" href="blog_list.html">主页</a>
+        <a class="nav-span nav-auth" href="blog_edit.html">写博客</a>
+        <a class="nav-span nav-auth" href="#" onclick="logout(); return false;">注销</a>
+        <a class="nav-span primary nav-guest" href="blog_login.html">登录</a>
+        <a class="nav-span nav-guest" href="blog_register.html">注册</a>
+    </nav>
+
+    <div class="editor-page">
+        <div class="editor-toolbar">
+            <input type="hidden" id="blogId">
+            <input class="title-input" type="text" id="title" name="title" placeholder="请输入文章标题">
+            <button class="btn" type="button" id="submit" onclick="submitArticle()">更新文章</button>
+        </div>
+
+        <div id="editor">
+            <textarea style="display:none;" id="content">## 在这里写下一篇博客</textarea>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="blog-editormd/editormd.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        var editor = null;
+        var blogId = getBlogId();
+
+        $(function () {
+            if (!blogId) {
+                alert("缺少 blogId，请从详情页进入");
+                location.href = "blog_list.html";
+                return;
+            }
+            getBlogInfo();
+        });
+
+        function getBlogInfo() {
+            $.ajax({
+                type: "get",
+                url: "/blog/getBlogDetail?blogId=" + encodeURIComponent(blogId),
+                success: function (result) {
+                    if (result == null || result.code != 200 || result.data == null) {
+                        alert(result && result.errMsg ? result.errMsg : "博客加载失败");
+                        return;
+                    }
+                    $("#title").val(result.data.title);
+                    $("#blogId").val(result.data.id);
+                    editor = editormd("editor", {
+                        width: "100%",
+                        height: "560px",
+                        path: "blog-editormd/lib/",
+                        onload: function () {
+                            this.setMarkdown(result.data.content == null ? "" : result.data.content);
+                        }
+                    });
+                }
+            });
+        }
+
+        function submitArticle() {
+            var title = $.trim($("#title").val());
+            if (!title) {
+                alert("请先填写文章标题");
+                $("#title").focus();
+                return;
+            }
+            var content = editor ? editor.getMarkdown() : $("#content").val();
+
+            $.ajax({
+                type: "post",
+                url: "/blog/update",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "id": $("#blogId").val(),
+                    "title": title,
+                    "content": content
+                }),
+                success: function (result) {
+                    if (result != null && result.code == 200 && result.data == true) {
+                        alert("更新成功");
+                        location.href = "blog_detail.html?blogId=" + encodeURIComponent(blogId);
+                    } else {
+                        alert(result && result.errMsg ? result.errMsg : "更新失败");
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

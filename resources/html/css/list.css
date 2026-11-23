@@ -1,0 +1,78 @@
+/* 博客列表页 —— 文章条目样式 */
+
+.blog {
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.blog:first-child {
+    padding-top: 16px;
+}
+
+.blog:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.blog .title {
+    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--text);
+}
+
+.blog .date {
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.blog .desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-secondary);
+}
+
+.blog .detail {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 7px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--primary);
+    background: var(--primary-ghost);
+    border-radius: 999px;
+    text-decoration: none;
+    transition: background-color .18s, color .18s;
+}
+
+.blog .detail:hover {
+    background: var(--primary-soft);
+    color: var(--primary-hover);
+}
+
+/* 左侧卡片里的快捷操作 */
+.card .card-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.card .card-links a {
+    display: block;
+    padding: 9px 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--primary);
+    background: var(--primary-ghost);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background-color .18s;
+}
+
+.card .card-links a:hover {
+    background: var(--primary-soft);
+    text-decoration: none;
+}

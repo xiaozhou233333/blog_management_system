@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客列表 · 我的博客系统</title>
+
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/list.css">
+</head>
+
+<body>
+    <nav class="nav">
+        <img src="pic/logo2.jpg" alt="logo">
+        <a class="blog-title" href="blog_list.html">我的博客系统</a>
+        <div class="space"></div>
+        <a class="nav-span active" href="blog_list.html">主页</a>
+        <a class="nav-span nav-auth" href="blog_edit.html">写博客</a>
+        <a class="nav-span nav-auth" href="#" onclick="logout(); return false;">注销</a>
+        <a class="nav-span primary nav-guest" href="blog_login.html">登录</a>
+        <a class="nav-span nav-guest" href="blog_register.html">注册</a>
+    </nav>
+
+    <div class="container">
+        <aside class="left">
+            <div class="card">
+                <img src="pic/doge.jpg" alt="avatar">
+                <h3>User Id</h3>
+                <a class="github-link" href="#">GitHub 地址</a>
+                <div class="row">
+                    <span>文章</span>
+                    <span>分类</span>
+                </div>
+                <div class="row">
+                    <span>2</span>
+                    <span>1</span>
+                </div>
+                <div class="card-links nav-auth">
+                    <a href="blog_edit.html">写一篇新博客</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="right">
+            <div class="page-head">
+                <h2>最新文章</h2>
+                <span class="meta">共 <span id="blogCount">0</span> 篇</span>
+            </div>
+            <div id="blogList"></div>
+        </main>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        $(function () {
+            var userId = getLoginUserId();
+            if (userId) {
+                getUserInfo("/user/getUserInfo?userId=" + userId);
+            }
+            loadBlogList();
+        });
+
+        function loadBlogList() {
+            $.ajax({
+                type: "get",
+                url: "/blog/getList",
+                success: function (result) {
+                    if (result == null || result.code != 200 || result.data == null) {
+                        $("#blogList").html('<div class="empty">暂无博客</div>');
+                        return;
+                    }
+                    if (result.data.length == 0) {
+                        $("#blogList").html('<div class="empty">还没有发布博客，去写第一篇吧</div>');
+                        return;
+                    }
+                    $("#blogCount").text(result.data.length);
+
+                    var html = "";
+                    $.each(result.data, function (index, blog) {
+                        var content = blog.content == null ? "" : blog.content;
+                        if (content.length > 100) {
+                            content = content.substring(0, 100) + "...";
+                        }
+                        html += '<article class="blog">';
+                        html += '<div class="title">' + escapeHtml(blog.title) + '</div>';
+                        html += '<div class="date">' + escapeHtml(blog.createTime || blog.updateTime) + '</div>';
+                        html += '<div class="desc">' + escapeHtml(content) + '</div>';
+                        html += '<a class="detail" href="blog_detail.html?blogId=' + blog.id + '">查看全文 &rsaquo;</a>';
+                        html += '</article>';
+                    });
+                    $("#blogList").html(html);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

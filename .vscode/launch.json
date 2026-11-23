@@ -1,0 +1,85 @@
+{
+    // 说明：
+    //   - 默认走 Nacos 注册发现（服务会出现在 http://127.0.0.1:8080 的控制台里）。
+    //   - 如果本机 Nacos 没启动/不可用，需要离线跑，就在 "args" 里加上
+    //     "--spring.profiles.active=local"（对应各服务的 application-local.yml，服务间直连）。
+    //   - 旧的失效配置（com.example.api.BlogServiceApplication、com.example.blog.BlogApplication、
+    //     SecurityUtil）已删除，它们对应的类已经不存在。
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "user-service (9010)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.UserServiceApplication",
+            "projectName": "user-info-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "blog-service (9020)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.BlogServiceApplication",
+            "projectName": "blog-info-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "gateway-service (10030)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.GatewayApplication",
+            "projectName": "gateway-service",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "user-service (local 模式)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.UserServiceApplication",
+            "projectName": "user-info-service",
+            "args": "--spring.profiles.active=local"
+        },
+        {
+            "type": "java",
+            "name": "blog-service (local 模式)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.BlogServiceApplication",
+            "projectName": "blog-info-service",
+            "args": "--spring.profiles.active=local"
+        },
+        {
+            "type": "java",
+            "name": "gateway-service (local 模式)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.GatewayApplication",
+            "projectName": "gateway-service",
+            "args": "--spring.profiles.active=local"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "全部启动 (Nacos 模式)",
+            "configurations": [
+                "user-service (9010)",
+                "blog-service (9020)",
+                "gateway-service (10030)"
+            ],
+            "stopAll": true
+        },
+        {
+            "name": "全部启动 (local 模式)",
+            "configurations": [
+                "user-service (local 模式)",
+                "blog-service (local 模式)",
+                "gateway-service (local 模式)"
+            ],
+            "stopAll": true
+        }
+    ]
+}

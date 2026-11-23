@@ -1,0 +1,76 @@
+/* 写博客 / 更新博客 —— 编辑器页面 */
+
+.editor-page {
+    width: 1100px;
+    max-width: calc(100% - 48px);
+    margin: 28px auto 48px;
+}
+
+.editor-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xs);
+}
+
+.editor-toolbar .title-input {
+    flex: 1;
+    min-width: 0;
+    height: 44px;
+    padding: 0 16px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color .18s, box-shadow .18s;
+}
+
+.editor-toolbar .title-input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+
+.editor-toolbar .title-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .14);
+}
+
+/* editor.md 容器 */
+#editor {
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+#editor .editormd {
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 0 !important;
+}
+
+#editor .editormd .CodeMirror {
+    height: 560px;
+    font-family: Consolas, Monaco, "Courier New", monospace;
+    font-size: 14px;
+}
+
+@media (max-width: 900px) {
+    .editor-page {
+        max-width: calc(100% - 32px);
+        margin: 20px auto 32px;
+    }
+    .editor-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
